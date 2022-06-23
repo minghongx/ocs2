@@ -31,6 +31,8 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
         ros-noetic-kdl-parser \
         ros-noetic-robot-state-publisher \
         ros-noetic-rviz \
+        # Official examples use GUI
+        gnome-terminal \
         # Optional dependencies
         ros-noetic-rqt-multiplot \
         ros-noetic-grid-map-msgs
