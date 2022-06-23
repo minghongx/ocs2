@@ -65,7 +65,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: Download submodules
+      - name: Retrieve submodules
         run: git submodule update --init --recursive
 
       # Build and push Docker image with Buildx (don't push on PR)
