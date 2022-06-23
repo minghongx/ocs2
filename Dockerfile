@@ -30,6 +30,7 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
         ros-noetic-urdf \
         ros-noetic-kdl-parser \
         ros-noetic-robot-state-publisher \
+        ros-noetic-rviz \
         # Optional dependencies
         ros-noetic-rqt-multiplot \
         ros-noetic-grid-map-msgs
