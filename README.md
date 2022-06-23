@@ -1,5 +1,4 @@
-`git submodule update --init --recursive`
+## Building image from source
 
-`docker run -it ocs2:latest /bin/bash`
-
-`docker container prune`
+1. Retrieve submodules: `git submodule update --init --recursive`
+2. Build the Dockerfile
