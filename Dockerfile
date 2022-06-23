@@ -40,11 +40,9 @@ RUN cd raisimLib && mkdir build && cd build \
     && cmake .. -DRAISIM_EXAMPLE=ON -DRAISIM_PY=ON -DPYTHON_EXECUTABLE=$(python3 -c "import sys; print(sys.executable)") \
     && make -j4 && checkinstall
 
-WORKDIR /opt/ocs2/src
+WORKDIR /root/catkin_ws/src
 COPY deps/catkin-pkgs .
 RUN catkin init --workspace .. \
     && catkin config --extend /opt/ros/noetic \
     && catkin config -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     && catkin build ocs2
-
-WORKDIR /home/surf
