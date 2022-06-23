@@ -23,6 +23,13 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
         git \
         # Make the installation of raisimLib easy to find for catkin and easy to uninstall in the future
         checkinstall \
+        # Dependencies of OCS2
+        ros-noetic-common-msgs \
+        ros-noetic-interactive-markers \
+        ros-noetic-tf \
+        ros-noetic-urdf \
+        ros-noetic-kdl-parser \
+        ros-noetic-robot-state-publisher \
         # Optional dependencies
         ros-noetic-rqt-multiplot \
         ros-noetic-grid-map-msgs
