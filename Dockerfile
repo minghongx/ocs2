@@ -37,13 +37,15 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
         dbus-x11 \
         # Optional dependencies
         ros-noetic-rqt-multiplot \
-        ros-noetic-grid-map-msgs
+        ros-noetic-grid-map-msgs \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /tmp/install
 COPY deps/raisimLib raisimLib
 RUN cd raisimLib && mkdir build && cd build \
     && cmake .. -DRAISIM_EXAMPLE=ON -DRAISIM_PY=ON -DPYTHON_EXECUTABLE=$(python3 -c "import sys; print(sys.executable)") \
-    && make -j4 && checkinstall
+    && make -j4 && checkinstall \
+    && rm -rf /tmp/* /var/tmp/*
 
 WORKDIR /root/catkin_ws/src
 COPY deps/catkin-pkgs .
@@ -51,6 +53,12 @@ RUN catkin init --workspace .. \
     && catkin config --extend /opt/ros/noetic \
     && catkin config -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     && catkin build ocs2
+
+# https://stackoverflow.com/questions/28405902/how-to-set-the-locale-inside-a-debian-ubuntu-docker-container
+# Workaround: https://hub.docker.com/_/debian/
+RUN apt-get update && apt-get install --yes locales && rm -rf /var/lib/apt/lists/* \
+	&& localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+ENV LANG en_US.utf8
 
 # Workaround: https://askubuntu.com/questions/432604/couldnt-connect-to-accessibility-bus
 ENV NO_AT_BRIDGE=1
