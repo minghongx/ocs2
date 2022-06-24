@@ -31,8 +31,10 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
         ros-noetic-kdl-parser \
         ros-noetic-robot-state-publisher \
         ros-noetic-rviz \
+        ros-noetic-grid-map-rviz-plugin \
         # Official examples use GUI
         gnome-terminal \
+        dbus-x11 \
         # Optional dependencies
         ros-noetic-rqt-multiplot \
         ros-noetic-grid-map-msgs
@@ -49,3 +51,6 @@ RUN catkin init --workspace .. \
     && catkin config --extend /opt/ros/noetic \
     && catkin config -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     && catkin build ocs2
+
+# Workaround: https://askubuntu.com/questions/432604/couldnt-connect-to-accessibility-bus
+ENV NO_AT_BRIDGE=1
