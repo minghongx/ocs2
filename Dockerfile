@@ -35,6 +35,7 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
         # Official examples use GUI
         gnome-terminal \
         dbus-x11 \
+        libcanberra-gtk-module libcanberra-gtk3-module \
         # Optional dependencies
         ros-noetic-rqt-multiplot \
         ros-noetic-grid-map-msgs \
