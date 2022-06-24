@@ -1,5 +1,5 @@
 FROM ubuntu:focal
-LABEL Name=ocs2 Version=2022.06.23
+LABEL Name=ocs2 Version=2022.06.24
 
 RUN apt-get update && apt-get install --yes --no-install-recommends \
         gnupg \
@@ -43,6 +43,7 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
 
 WORKDIR /tmp/install
 COPY deps/raisimLib raisimLib
+# RaiSim is not supported on Linux ARM64. See https://github.com/raisimTech/raisimLib/issues/284
 RUN cd raisimLib && mkdir build && cd build \
     && cmake .. -DRAISIM_EXAMPLE=ON -DRAISIM_PY=ON -DPYTHON_EXECUTABLE=$(python3 -c "import sys; print(sys.executable)") \
     && make -j4 && checkinstall \

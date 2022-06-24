@@ -1,8 +1,10 @@
+Linux ARM64 is not supported because raisimTech/raisimLib#284.
+
 ## Start and interact with a container with Linux GUI support
 
 ### Preface
 
-As of June 2022, the mainstream display server communications protocols are Wayland and X11, with only the latter being considered here.
+As of June 2022, the mainstream display server communications protocols are Wayland and X11. Only the use of the latter will be discussed below.
 
 The container's name defualts to *surf*, as the container was developed for my XJTLU SURF in 2022.
 
