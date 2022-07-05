@@ -1,4 +1,4 @@
-Linux ARM64 is not supported because raisimTech/raisimLib#284.
+Linux ARM64 is not supported because of raisimTech/raisimLib#284.
 
 ## Start and interact with a container with Linux GUI support
 
