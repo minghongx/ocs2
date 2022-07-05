@@ -1,5 +1,5 @@
 FROM ubuntu:focal
-LABEL Name=ocs2 Version=2022.06.24
+LABEL Name=ocs2 Version=2022.07.05
 
 RUN apt-get update && apt-get install --yes --no-install-recommends \
         gnupg \
@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
     && wget http://packages.ros.org/ros.key -O - | apt-key add - && \
        echo "deb http://packages.ros.org/ros/ubuntu focal main" > /etc/apt/sources.list.d/ros-latest.list \
     && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install --yes --no-install-recommends \
+        # Both GCC 11 and Clang fail to compile OCS2. It seems that only GCC 9 can be used
         build-essential \
         make \
         cmake \
@@ -49,7 +50,7 @@ RUN cd raisimLib && mkdir build && cd build \
     && make -j4 && checkinstall \
     && rm -rf /tmp/* /var/tmp/*
 
-WORKDIR /root/catkin_ws/src
+WORKDIR /catkin_ws/src
 COPY deps/catkin-pkgs .
 RUN catkin init --workspace .. \
     && catkin config --extend /opt/ros/noetic \
