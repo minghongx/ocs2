@@ -1,4 +1,7 @@
+## Cross-platform
+
 Linux ARM64 is not supported because of raisimTech/raisimLib#284.
+
 
 ## Start and interact with a container with Linux GUI support
 
@@ -71,7 +74,6 @@ root@<containerID>:/path/to/workdir#
 
 - [Docker official doc on accessing Nvidia GPU](https://docs.docker.com/engine/reference/commandline/run/#access-an-nvidia-gpu)
 - [ROS official doc on accelerated graphics](https://wiki.ros.org/docker/Tutorials/Hardware%20Acceleration)
-
 
 
 ## Building image from source

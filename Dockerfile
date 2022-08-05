@@ -1,5 +1,14 @@
 FROM ubuntu:focal
-LABEL Name=ocs2 Version=2022.07.05
+LABEL Name=ocs2 Version=2022.08.05
+
+# https://stackoverflow.com/questions/28405902/how-to-set-the-locale-inside-a-debian-ubuntu-docker-container
+# Workaround: https://hub.docker.com/_/debian/
+RUN apt-get update && apt-get install --yes locales && rm -rf /var/lib/apt/lists/* \
+	&& localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+ENV LANG en_US.utf8
+
+# Workaround: https://askubuntu.com/questions/432604/couldnt-connect-to-accessibility-bus
+ENV NO_AT_BRIDGE=1
 
 RUN apt-get update && apt-get install --yes --no-install-recommends \
         gnupg \
@@ -24,7 +33,11 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
         git \
         # Make the installation of raisimLib easy to find for catkin and easy to uninstall in the future
         checkinstall \
-        # Dependencies of OCS2
+        # Official examples launch several terminal emulators to form a dashboard
+        gnome-terminal \
+        dbus-x11 \
+        libcanberra-gtk-module libcanberra-gtk3-module \
+        # Misc
         ros-noetic-common-msgs \
         ros-noetic-interactive-markers \
         ros-noetic-tf \
@@ -33,13 +46,10 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
         ros-noetic-robot-state-publisher \
         ros-noetic-rviz \
         ros-noetic-grid-map-rviz-plugin \
-        # Official examples use GUI
-        gnome-terminal \
-        dbus-x11 \
-        libcanberra-gtk-module libcanberra-gtk3-module \
-        # Optional dependencies
+        # Optional
         ros-noetic-rqt-multiplot \
         ros-noetic-grid-map-msgs \
+    # Prune
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /tmp/install
@@ -57,11 +67,5 @@ RUN catkin init --workspace .. \
     && catkin config -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     && catkin build ocs2
 
-# https://stackoverflow.com/questions/28405902/how-to-set-the-locale-inside-a-debian-ubuntu-docker-container
-# Workaround: https://hub.docker.com/_/debian/
-RUN apt-get update && apt-get install --yes locales && rm -rf /var/lib/apt/lists/* \
-	&& localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
-ENV LANG en_US.utf8
-
-# Workaround: https://askubuntu.com/questions/432604/couldnt-connect-to-accessibility-bus
-ENV NO_AT_BRIDGE=1
+# Config shell
+RUN echo "[ -f /catkin_ws/devel/setup.bash ] && source /catkin_ws/devel/setup.bash" >> ~/.bashrc
